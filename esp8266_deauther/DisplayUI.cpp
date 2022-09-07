@@ -1,8 +1,14 @@
 /* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
 
 #include "DisplayUI.h"
-
 #include "settings.h"
+#include <ESP8266WiFi.h>
+#include <WiFiClientSecure.h>
+#include <WiFiUDP.h>
+#include <WakeOnLan.h>
+
+
+
 
 // ===== adjustable ===== //
 void DisplayUI::configInit() {
@@ -88,6 +94,7 @@ void DisplayUI::setup() {
             mode = DISPLAY_MODE::PACKETMONITOR;
         });
         addMenuNode(&mainMenu, D_CLOCK, &clockMenu); // CLOCK
+        addMenuNode(&mainMenu, D_WOL, &wolMenu); // WOL
 
 #ifdef HIGHLIGHT_LED
         addMenuNode(&mainMenu, D_LED, [this]() {     // LED
@@ -455,6 +462,25 @@ void DisplayUI::setup() {
         });
     });
 
+    // WOL MENU
+    createMenu(&wolMenu, &mainMenu, [this]() {
+	addMenuNode(&wolMenu, D_CON, [this]() {
+
+        WiFi.mode(WIFI_STA);
+        WiFi.disconnect();
+        WiFi.begin(settings::getWolSettings().ssidW, settings::getWolSettings().passwordW);
+    });
+        addMenuNode(&wolMenu, D_ON, [this]() {
+		//uint8_t MACW[6]={ 0xB4, 0x2E, 0x99, 0xF6, 0x57, 0xB3 };
+		WiFiUDP UDPW;
+        	WakeOnLan WOL(UDPW);
+    		WOL.setRepeat(100, 10); // Repeat the packet three times with 100ms delay between
+		WOL.sendMagicPacket((uint8_t*)settings::getWolSettings().macw, sizeof((uint8_t*)settings::getWolSettings().macw));
+    WiFi.disconnect();
+        });
+    });
+
+
     // ===================== //
 
     // set current menu to main menu
@@ -565,7 +591,7 @@ void DisplayUI::setupButtons() {
                 else currentMenu->selected = 0;
             } else if (mode == DISPLAY_MODE::PACKETMONITOR) { // when in packet monitor, change channel
                 scan.setChannel(wifi_channel - 1);
-            } else if (mode == DISPLAY_MODE::CLOCK) {         // when in clock, change time
+            } else if (mode == DISPLAY_MODE::CLOCK) {         // when in packet monitor, change channel
                 setTime(clockHour, clockMinute - 1, clockSecond);
             }
         }
@@ -583,7 +609,7 @@ void DisplayUI::setupButtons() {
                 scan.setChannel(wifi_channel - 1);
             }
 
-            else if (mode == DISPLAY_MODE::CLOCK) {           // when in clock, change time
+            else if (mode == DISPLAY_MODE::CLOCK) { // when in packet monitor, change channel
                 setTime(clockHour, clockMinute - 10, clockSecond);
             }
         }

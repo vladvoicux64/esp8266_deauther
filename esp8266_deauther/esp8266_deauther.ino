@@ -7,7 +7,6 @@ extern "C" {
     // Please follow this tutorial:
     // https://github.com/spacehuhn/esp8266_deauther/wiki/Installation#compiling-using-arduino-ide
     // And be sure to have the right board selected
-  #include "user_interface.h"
 }
 
 #include "EEPROMHelper.h"
@@ -31,8 +30,8 @@ extern "C" {
 #include "CLI.h"
 #include "DisplayUI.h"
 #include "A_config.h"
-
 #include "led.h"
+#include <LittleFS.h>
 
 // Run-Time Variables //
 Names names;

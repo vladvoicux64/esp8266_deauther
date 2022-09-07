@@ -1,7 +1,7 @@
 /* This software is licensed under the MIT License: https://github.com/spacehuhntech/esp8266_deauther */
 
 #include "led.h"
-
+#include "WiFi.h"
 #include "A_config.h" // Config for LEDs
 #include <Arduino.h>  // digitalWrite, analogWrite, pinMode
 #include "language.h" // Strings used in printColor and tempDisable
@@ -26,9 +26,9 @@ namespace led {
     LED_MODE mode = OFF;
 
 #if defined(LED_NEOPIXEL_RGB)
-    Adafruit_NeoPixel strip { LED_NUM, LED_NEOPIXEL_PIN, NEO_RGB + NEO_KHZ800 };
+    Adafruit_NeoPixel strip { LED_NUM, LED_NEOPIXEL_PIN, NEO_RGB + NEO_KHZ400 };
 #elif defined(LED_NEOPIXEL_GRB)
-    Adafruit_NeoPixel strip { LED_NUM, LED_NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800 };
+    Adafruit_NeoPixel strip { LED_NUM, LED_NEOPIXEL_PIN, NEO_GRB + NEO_KHZ400 };
 #elif defined(LED_MY92)
     my92xx myled { LED_MY92_MODEL, LED_NUM, LED_MY92_DATA, LED_MY92_CLK, MY92XX_COMMAND_DEFAULT };
 #elif defined(LED_DOTSTAR)
@@ -107,9 +107,10 @@ namespace led {
             setMode(SCAN);
         } else if (attack.isRunning()) {
             setMode(ATTACK);
-        } else {
-            setMode(IDLE);
-        }
+        } else if(WiFi.status() == WL_CONNECTED) {
+            setMode(CON);
+        } else { setMode(IDLE); 
+        }; 
     }
 
     void setMode(LED_MODE new_mode, bool force) {
@@ -129,6 +130,11 @@ namespace led {
                 case IDLE:
                     setColor(LED_MODE_IDLE);
                     break;
+		            case CON:
+                    setColor(LED_MODE_CON);
+                    break;
+		    
+
             }
         }
     }

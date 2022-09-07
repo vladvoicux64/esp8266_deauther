@@ -8,7 +8,8 @@ enum LED_MODE {
     OFF,
     SCAN,
     ATTACK,
-    IDLE
+    IDLE,
+    CON
 };
 
 namespace led {

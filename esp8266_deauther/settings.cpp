@@ -100,6 +100,11 @@ namespace settings {
         // Display
         JSON_FLAG(S_JSON_DISPLAYINTERFACE, data.display.enabled);
         JSON_INT(S_JSON_DISPLAY_TIMEOUT, data.display.timeout);
+	  
+        // WOL
+        JSON_VALUE(S_JSON_SSIDW, data.wol.ssidW);
+	      JSON_VALUE(S_JSON_PASSWORDW, data.wol.passwordW);
+        JSON_HEX(S_JSON_MACW, data.wol.macw, 6);
 
         str.setCharAt(str.length()-1, '}');
     }
@@ -180,6 +185,10 @@ namespace settings {
 
         data.display.enabled = USE_DISPLAY;
         data.display.timeout = DISPLAY_TIMEOUT;
+
+	      strncpy(data.wol.ssidW, WOL_SSIDW, 32);
+        strncpy(data.wol.passwordW, WOL_PASSWORDW, 64);
+        memcpy(data.wol.macw, WOL_MACW, 64);
 
         changed = true;
 
@@ -268,6 +277,10 @@ namespace settings {
         return data.display;
     }
 
+    const wol_settings_t& getWolSettings() {
+        return data.wol;
+    }
+
     // ===== SETTERS ===== //
 
     void setAllSettings(settings_t& newSettings) {
@@ -319,5 +332,10 @@ namespace settings {
     void setDisplaySettings(const display_settings_t& display) {
         data.display = display;
         changed      = true;
+    }
+
+    void setWolSettings(const wol_settings_t& wol) {
+        data.wol = wol;
+        changed = true;
     }
 }

@@ -87,6 +87,13 @@ typedef struct display_settings_t {
     uint32_t timeout;
 } display_settings_t;
 
+// ===== WOL ===== //
+typedef struct wol_settings_t {
+	char ssidW[33];
+	char passwordW[36];
+  uint8_t macw[64];
+} wol_settings_t;
+
 // ===== SETTINGS ===== //
 typedef struct settings_t {
     uint32_t                magic_num;
@@ -100,6 +107,7 @@ typedef struct settings_t {
     cli_settings_t          cli;
     led_settings_t          led;
     display_settings_t      display;
+    wol_settings_t          wol;
 } settings_t;
 
 namespace settings {
@@ -120,6 +128,7 @@ namespace settings {
     const cli_settings_t& getCLISettings();
     const led_settings_t& getLEDSettings();
     const display_settings_t& getDisplaySettings();
+    const wol_settings_t& getWolSettings();
 
     void setAllSettings(settings_t& settings);
     void setAutosaveSettings(const autosave_settings_t& autosave);
@@ -131,4 +140,5 @@ namespace settings {
     void setCLISettings(const cli_settings_t& cli);
     void setLEDSettings(const led_settings_t& led);
     void setDisplaySettings(const display_settings_t& display);
+    void setWolSettings(const wol_settings_t& wol);
 }

@@ -730,6 +730,12 @@ void CLI::runCommand(String input) {
         else if (eqls(str, S_JSON_DISPLAYINTERFACE)) prntln(settings::getDisplaySettings().enabled);
         else if (eqls(str, S_JSON_DISPLAY_TIMEOUT)) prntln(settings::getDisplaySettings().timeout);
 
+        //WOL
+        else if (eqls(str, S_JSON_SSIDW)) prntln(settings::getWolSettings().ssidW);
+        else if (eqls(str, S_JSON_PASSWORDW)) prntln(settings::getWolSettings().passwordW);
+        else if (eqls(str, S_JSON_MACW)) prntln(settings::getWolSettings().macw);
+
+
         else {
             prnt(_tmp);
             prntln(" setting not found");
@@ -792,6 +798,11 @@ void CLI::runCommand(String input) {
         // Display
         else if (eqls(str, S_JSON_DISPLAYINTERFACE)) newSettings.display.enabled = boolVal;
         else if (eqls(str, S_JSON_DISPLAY_TIMEOUT)) newSettings.display.timeout = unsignedVal;
+
+        //WOL
+        else if (eqls(str, S_JSON_SSIDW)) strncpy(newSettings.wol.ssidW, strVal.c_str(), 32);
+        else if (eqls(str, S_JSON_PASSWORDW)) strncpy(newSettings.wol.passwordW, strVal.c_str(), 64);
+        else if (eqls(str, S_JSON_MACW)) strToMac(strVal, newSettings.wol.macw);
 
         else {
             prnt(str);

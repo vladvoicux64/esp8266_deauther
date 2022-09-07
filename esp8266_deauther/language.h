@@ -38,7 +38,7 @@ extern void prntln(const uint32_t i);
 
 // ===== GLOBAL STRINGS ===== //
 
-// Often used characters, therefor in the RAM
+// Often used characters, therefore in the RAM
 const char CURSOR              = '|';
 const char SPACE               = ' ';
 const char DOUBLEPOINT         = ':';
@@ -367,6 +367,7 @@ const char D_PACKET_MONITOR[] PROGMEM = "PACKET MONITOR";
 const char D_CLOCK[] PROGMEM = "CLOCK";
 const char D_CLOCK_DISPLAY[] PROGMEM = "CLOCK DISPLAY";
 const char D_CLOCK_SET[] PROGMEM = "SET CLOCK";
+const char D_WOL[] PROGMEM = "WAKE ON LAN";
 
 // SCAN MENU
 const char D_SCAN_APST[] PROGMEM = "SCAN AP + ST";
@@ -389,6 +390,10 @@ const char D_BEACON[] PROGMEM = "BEACON";
 const char D_PROBE[] PROGMEM = "PROBE";
 const char D_START_ATTACK[] PROGMEM = "START";
 const char D_STOP_ATTACK[] PROGMEM = "STOP";
+
+// WOL MENU
+const char D_ON[] PROGMEM = "TURN COMPUTER ON";
+const char D_CON[] PROGMEM = "CONNECT TO WIFI";
 
 // SUB MENUS
 const char D_ENCRYPTION[] PROGMEM = "Encryption:";
@@ -622,3 +627,8 @@ const char S_JSON_LEDENABLED[] PROGMEM = "led";
 // Display
 const char S_JSON_DISPLAYINTERFACE[] PROGMEM = "display";
 const char S_JSON_DISPLAY_TIMEOUT[] PROGMEM = "displayTimeout";
+
+//WOL
+const char S_JSON_SSIDW[] PROGMEM = "wolSsid";
+const char S_JSON_PASSWORDW[] PROGMEM = "wolPassword";
+const char S_JSON_MACW[] PROGMEM = "wolMac";

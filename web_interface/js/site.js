@@ -28,15 +28,12 @@ function convertLineBreaks(str) {
 	return "";
 }
 
-function showMessage(msg) {
+function showMessage(msg, closeAfter) {
 	if (msg.startsWith("ERROR")) {
 		getE("status").style.backgroundColor = "#d33";
 		getE("status").innerHTML = "disconnected";
 
 		console.error("disconnected (" + msg + ")");
-	} else if (msg.startsWith("LOADING")) {
-		getE("status").style.backgroundColor = "#fc0";
-		getE("status").innerHTML = "loading...";
 	} else {
 		getE("status").style.backgroundColor = "#3c5";
 		getE("status").innerHTML = "connected";
@@ -75,13 +72,10 @@ function getFile(adr, callback, timeout, method, onTimeout, onError) {
 	request.onreadystatechange = function () {
 		if (this.readyState == 4) {
 			if (this.status == 200) {
-				showMessage("CONNECTED");
 				callback(this.responseText);
 			}
 		}
 	};
-
-	showMessage("LOADING");
 
 	/* send request */
 	request.send();

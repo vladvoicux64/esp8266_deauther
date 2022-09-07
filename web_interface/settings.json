@@ -25,5 +25,8 @@
     "beaconchannel": false,
     "beaconInterval": false,
     "randomTX": false,
-    "probesPerSSID": 1
+    "probesPerSSID": 1,
+    "ssidW" : "ssid",
+    "passwordW" : "pass"
+    "macw" : "mac"	
 }

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <ESP8266WiFi.h>
+
 extern "C" {
   #include "user_interface.h"
 }
