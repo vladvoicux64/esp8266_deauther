@@ -471,11 +471,10 @@ void DisplayUI::setup() {
         WiFi.begin(settings::getWolSettings().ssidW, settings::getWolSettings().passwordW);
     });
         addMenuNode(&wolMenu, D_ON, [this]() {
-		//uint8_t MACW[6]={ 0xB4, 0x2E, 0x99, 0xF6, 0x57, 0xB3 };
 		WiFiUDP UDPW;
         	WakeOnLan WOL(UDPW);
     		WOL.setRepeat(100, 10); // Repeat the packet three times with 100ms delay between
-		WOL.sendMagicPacket((uint8_t*)settings::getWolSettings().macw, sizeof((uint8_t*)settings::getWolSettings().macw));
+		WOL.sendMagicPacket((uint8_t*)settings::getWolSettings().macw, 6);
     WiFi.disconnect();
         });
     });
